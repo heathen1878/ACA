@@ -1,10 +1,22 @@
 # Azure Container Apps
 
+## Build statuses
+
+### Validation
+
+[![Validate Fibonacci Infrastructure](https://github.com/heathen1878/ACA/actions/workflows/validate_fibonacci_v1_infra.yaml/badge.svg)](https://github.com/heathen1878/ACA/actions/workflows/validate_fibonacci_v1_infra.yaml) 
+
+### Build
+
+...
+
 ## Tests
+
+...
 
 ## Security
 
-[![Known Vulnerabilities](https://snyk.io/test/github/heathen1878/ACA/badge.svg)](https://snyk.io/test/github/heathen1878/ACA)
+[![Known Vulnerabilities](https://snyk.io/test/github/heathen1878/ACA/badge.svg)](https://snyk.io/test/github/heathen1878/ACA) :point_left: this needs a little more work.
 
 Azure Container Apps examples using Docker images from [here](https://github.com/heathen1878/Docker)
 

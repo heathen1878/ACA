@@ -45,7 +45,11 @@ Workflow template [here](../.github/workflows/)
 
 #### Snyk
 
-Snyk is a vulnerability scanner for IaC amongst other things. 
+Snyk is a vulnerability scanner for IaC amongst other things.
+
+```shell
+gh secret set SNYK_TOKEN -b "Snyk API key" -r "account_name/repo_name"
+```
 
 ## Validation
 
