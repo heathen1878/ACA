@@ -1,3 +1,3 @@
 output "dummy" {
-  value = "initialisation"
+  value = "Initialisation"
 }
