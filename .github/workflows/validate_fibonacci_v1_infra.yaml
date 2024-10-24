@@ -158,8 +158,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy Infrastructure using Terraform
     needs: [
-      plan_fibonacci_v1,
-      push_sandbox_images_to_registry
+      plan_fibonacci_v1
     ]
 
     defaults:
