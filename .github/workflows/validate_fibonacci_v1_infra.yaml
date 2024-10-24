@@ -9,7 +9,7 @@ on:
 
 jobs:
   cost_infra:
-    uses: ./.github/workflows/infracost.yaml
+    uses: .github/workflows/infracost.yaml
     with:
       BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
       PR_ID: ${{ github.event.pull_request.number }}
