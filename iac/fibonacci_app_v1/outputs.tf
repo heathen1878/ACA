@@ -1,3 +1,4 @@
-output "nginx_endpoint" {
-  value = azurerm_container_app.nginx
-}
+# output "nginx_endpoint" {
+#   value = azurerm_container_app.nginx
+#   sensitive = true
+# }
