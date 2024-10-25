@@ -385,6 +385,16 @@ resource "azurerm_container_app" "nginx" {
 
   template {
     container {
+      env {
+        name  = "API_HOST"
+        value = azurerm_container_app.api.name
+      }
+
+      env {
+        name  = "CLIENT_HOST"
+        value = azurerm_container_app.client.name
+      }
+
       name   = "nginx"
       image  = local.nginx_docker_image
       cpu    = "1.0"
