@@ -179,7 +179,7 @@ resource "azurerm_container_app" "redis" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   ingress {
     exposed_port = 6379
@@ -209,7 +209,7 @@ resource "azurerm_container_app" "worker" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   template {
     min_replicas = 1
@@ -244,7 +244,7 @@ resource "azurerm_container_app" "api" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   ingress {
     exposed_port = 5000
@@ -314,7 +314,7 @@ resource "azurerm_container_app" "client" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   ingress {
     exposed_port = 3000
@@ -353,7 +353,7 @@ resource "azurerm_container_app" "nginx" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   ingress {
     allow_insecure_connections = true
