@@ -7,11 +7,11 @@ locals {
   cae_infra_resource_group_name  = format("rg-cae-infra-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   postgresql_server_name         = format("psql-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   container_app_environment_name = format("cae-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
-  redis_container_app            = format("ca-redis-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
-  api_container_app              = format("ca-api-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
-  client_container_app           = format("ca-client-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
-  nginx_container_app            = format("ca-nginx-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
-  worker_container_app           = format("ca-worker-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
+  redis_container_app            = "ca-redis"
+  api_container_app              = "ca-api"
+  client_container_app           = "ca-client"
+  nginx_container_app            = "ca-nginx"
+  worker_container_app           = "ca-worker"
   api_docker_image               = format("index.docker.io/heathen1878/api:%s", var.docker_image_tag)
   client_docker_image            = format("index.docker.io/heathen1878/client:%s", var.docker_image_tag)
   nginx_docker_image             = "index.docker.io/heathen1878/nginx:latest"
