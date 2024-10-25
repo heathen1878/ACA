@@ -1,6 +1,8 @@
 locals {
   # define some local variables
   resource_group_name            = format("rg-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
+  use_existing_network_watcher   = false
+  network_watcher                = format("nw-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   virtual_network_name           = format("vnet-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   cae_infra_resource_group_name  = format("rg-cae-infra-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   postgresql_server_name         = format("psql-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
@@ -34,6 +36,21 @@ locals {
 resource "azurerm_resource_group" "this" {
   name     = local.resource_group_name
   location = local.location
+  tags = merge(local.tags,
+    {
+      service = "Container App Environment"
+    }
+  )
+}
+
+resource "azurerm_network_watcher" "this" {
+  for_each = local.use_existing_network_watcher ? {} : {
+    "Deployed" = "Yes"
+  }
+
+  name                = local.network_watcher
+  resource_group_name = azurerm_resource_group.this.name
+  location            = local.location
   tags = merge(local.tags,
     {
       service = "Container App Environment"

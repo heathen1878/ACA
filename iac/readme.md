@@ -1,10 +1,16 @@
 # IAC
 
+[Home](../README.md)
+
 ## Prerequsities
 
 ### Github
 
 [GitHub Cli](https://cli.github.com/)
+
+### Environment
+
+A protection rule for the Sandbox; this ensures the deployment isn't removed until a manual check is complete. TODO: Needs replacing with an automated test.
 
 ### Github Variables
 
