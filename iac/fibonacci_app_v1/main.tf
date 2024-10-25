@@ -1,6 +1,8 @@
 locals {
   # define some local variables
   resource_group_name            = format("rg-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
+  use_existing_network_watcher   = false
+  network_watcher                = format("nw-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   virtual_network_name           = format("vnet-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   cae_infra_resource_group_name  = format("rg-cae-infra-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   postgresql_server_name         = format("psql-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
@@ -12,7 +14,7 @@ locals {
   worker_container_app           = format("ca-worker-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   api_docker_image               = format("index.docker.io/heathen1878/api:%s", var.docker_image_tag)
   client_docker_image            = format("index.docker.io/heathen1878/client:%s", var.docker_image_tag)
-  nginx_docker_image             = format("index.docker.io/heathen1878/nginx:%s", var.docker_image_tag)
+  nginx_docker_image             = "index.docker.io/heathen1878/nginx:latest"
   worker_docker_image            = format("index.docker.io/heathen1878/worker:%s", var.docker_image_tag)
   redis_cache                    = format("redis-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   postgresql                     = format("psql-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
@@ -34,6 +36,21 @@ locals {
 resource "azurerm_resource_group" "this" {
   name     = local.resource_group_name
   location = local.location
+  tags = merge(local.tags,
+    {
+      service = "Container App Environment"
+    }
+  )
+}
+
+resource "azurerm_network_watcher" "this" {
+  for_each = local.use_existing_network_watcher ? {} : {
+    "Deployed" = "Yes"
+  }
+
+  name                = local.network_watcher
+  resource_group_name = azurerm_resource_group.this.name
+  location            = local.location
   tags = merge(local.tags,
     {
       service = "Container App Environment"
@@ -160,10 +177,12 @@ resource "azurerm_container_app_environment" "this" {
   infrastructure_resource_group_name = local.cae_infra_resource_group_name
   infrastructure_subnet_id           = azurerm_subnet.cae.id
   workload_profile {
-    name                  = "Dedicated"
-    workload_profile_type = "D4"
-    minimum_count         = 1
-    maximum_count         = 3
+    name                  = "Consumption"
+    workload_profile_type = "Consumption"
+    #name                  = "Dedicated"
+    #workload_profile_type = "D4"
+    #minimum_count         = 1
+    #maximum_count         = 3
   }
   tags = merge(local.tags,
     {
@@ -177,7 +196,7 @@ resource "azurerm_container_app" "redis" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   ingress {
     exposed_port = 6379
@@ -207,7 +226,7 @@ resource "azurerm_container_app" "worker" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   template {
     min_replicas = 1
@@ -242,7 +261,7 @@ resource "azurerm_container_app" "api" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   ingress {
     exposed_port = 5000
@@ -312,7 +331,7 @@ resource "azurerm_container_app" "client" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   ingress {
     exposed_port = 3000
@@ -351,7 +370,7 @@ resource "azurerm_container_app" "nginx" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Dedicated"
+  workload_profile_name        = "Consumption"
 
   ingress {
     allow_insecure_connections = true
@@ -366,6 +385,16 @@ resource "azurerm_container_app" "nginx" {
 
   template {
     container {
+      env {
+        name  = "API_HOST"
+        value = azurerm_container_app.api.name
+      }
+
+      env {
+        name  = "CLIENT_HOST"
+        value = azurerm_container_app.client.name
+      }
+
       name   = "nginx"
       image  = local.nginx_docker_image
       cpu    = "1.0"

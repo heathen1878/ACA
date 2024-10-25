@@ -1,3 +1,4 @@
-output "dummy" {
-  value = "initialisation"
-}
+# output "nginx_endpoint" {
+#   value = azurerm_container_app.nginx
+#   sensitive = true
+# }
