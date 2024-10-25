@@ -14,7 +14,7 @@ locals {
   worker_container_app           = format("ca-worker-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   api_docker_image               = format("index.docker.io/heathen1878/api:%s", var.docker_image_tag)
   client_docker_image            = format("index.docker.io/heathen1878/client:%s", var.docker_image_tag)
-  nginx_docker_image             = format("index.docker.io/heathen1878/nginx:%s", var.docker_image_tag)
+  nginx_docker_image             = "index.docker.io/heathen1878/nginx:latest"
   worker_docker_image            = format("index.docker.io/heathen1878/worker:%s", var.docker_image_tag)
   redis_cache                    = format("redis-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
   postgresql                     = format("psql-%s-%s-%s-%s", local.name, var.environment, local.location_short_code, local.random)
