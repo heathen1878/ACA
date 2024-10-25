@@ -339,7 +339,7 @@ jobs:
       - name: modify state storage acl - clean up
         if: always()
         run: |
-          az storage account network-rule remove --account-name ${{ vars.FBV1_STATE_STORAGE_ACCOUNT }} --ip-address ${{ steps.runner_ip.outputs.IPADDR }}  --subscription ${{ vars.ARM_SUBSCRIPTION_ID }}  > /dev/null 2>&1
+          az storage account network-rule remove --account-name ${{ vars.STATE_STORAGE_ACCOUNT }} --ip-address ${{ steps.runner_ip.outputs.IPADDR }}  --subscription ${{ vars.ARM_SUBSCRIPTION_ID }}  > /dev/null 2>&1
 
       - name: Add Comment to PR
         uses: actions/github-script@v7
