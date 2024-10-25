@@ -160,8 +160,10 @@ resource "azurerm_container_app_environment" "this" {
   infrastructure_resource_group_name = local.cae_infra_resource_group_name
   infrastructure_subnet_id           = azurerm_subnet.cae.id
   workload_profile {
-    name                  = "Dedicated"
-    workload_profile_type = "D4"
+    name                  = "Consumption"
+    workload_profile_type = "Consumption"
+    #name                  = "Dedicated"
+    #workload_profile_type = "D4"
     #minimum_count         = 1
     #maximum_count         = 3
   }
