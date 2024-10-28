@@ -2,19 +2,15 @@
 
 ## Build statuses
 
-### Validation
+### Validation incl. testing
 
-[![Validate Fibonacci Infrastructure](https://github.com/heathen1878/ACA/actions/workflows/validate_fibonacci_v1_infra.yaml/badge.svg)](https://github.com/heathen1878/ACA/actions/workflows/validate_fibonacci_v1_infra.yaml) 
+[![Validate Fibonacci Infrastructure](https://github.com/heathen1878/ACA/actions/workflows/validate_fibonacci_v1_infra.yaml/badge.svg)](https://github.com/heathen1878/ACA/actions/workflows/validate_fibonacci_v1_infra.yaml)
 
-### Build
+## FinOps
 
-...
+[Infracost](https://github.com/heathen1878/ACA/pull/3#issuecomment-2438066882)
 
-## Tests
-
-...
-
-## Security
+## SecOps
 
 [![Known Vulnerabilities](https://snyk.io/test/github/heathen1878/ACA/badge.svg)](https://snyk.io/test/github/heathen1878/ACA) :point_left: this needs a little more work.
 

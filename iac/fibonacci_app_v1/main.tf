@@ -179,10 +179,12 @@ resource "azurerm_container_app_environment" "this" {
   workload_profile {
     name                  = "Consumption"
     workload_profile_type = "Consumption"
-    #name                  = "Dedicated"
-    #workload_profile_type = "D4"
-    #minimum_count         = 1
-    #maximum_count         = 3
+  }
+  workload_profile {
+    name                  = "Dedicated"
+    workload_profile_type = "D4"
+    minimum_count         = 1
+    maximum_count         = 3
   }
   tags = merge(local.tags,
     {
@@ -196,7 +198,7 @@ resource "azurerm_container_app" "redis" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Consumption"
+  workload_profile_name        = "Dedicated"
 
   ingress {
     exposed_port = 6379
@@ -261,7 +263,7 @@ resource "azurerm_container_app" "api" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Consumption"
+  workload_profile_name        = "Dedicated"
 
   ingress {
     exposed_port = 5000
@@ -370,7 +372,7 @@ resource "azurerm_container_app" "nginx" {
   container_app_environment_id = azurerm_container_app_environment.this.id
   resource_group_name          = azurerm_resource_group.this.name
   revision_mode                = "Single"
-  workload_profile_name        = "Consumption"
+  workload_profile_name        = "Dedicated"
 
   ingress {
     allow_insecure_connections = true
@@ -385,16 +387,6 @@ resource "azurerm_container_app" "nginx" {
 
   template {
     container {
-      env {
-        name  = "API_HOST"
-        value = azurerm_container_app.api.name
-      }
-
-      env {
-        name  = "CLIENT_HOST"
-        value = azurerm_container_app.client.name
-      }
-
       name   = "nginx"
       image  = local.nginx_docker_image
       cpu    = "1.0"
@@ -403,7 +395,7 @@ resource "azurerm_container_app" "nginx" {
   }
   tags = merge(local.tags,
     {
-      service = "NGinx"
+      service = "nginx"
     }
   )
   depends_on = [

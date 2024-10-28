@@ -1,6 +1,7 @@
 package test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -11,22 +12,10 @@ type Options map[string]any
 
 func DefaultOptions() Options {
 	return Options{
-		""
+		"docker_image_tag":    os.Getenv("DOCKER_IMAGE_TAG"),
+		"psql_admin_username": os.Getenv("PSQL_ADMIN_USERNAME"),
+		"psql_admin_password": os.Getenv("PSQL_ADMIN_PASSWORD"),
 	}
-}
-
-func (o Options) With(with Options) Options {
-	options := o
-	for k, v := range with {
-		options[k] = v
-	}
-	return options
-}
-
-func (o Options) Without(key string) Options {
-	option := o
-	delete(option, key)
-	return option
 }
 
 func Setup(t *testing.T, e string, opts Options) *terraform.Options {
@@ -35,10 +24,4 @@ func Setup(t *testing.T, e string, opts Options) *terraform.Options {
 		TerraformDir: tempFolder,
 		Vars:         opts,
 	}
-}
-
-func GetTestConfig(t *testing.T) Options {
-	t.Helper()
-
-	return Options{}
 }

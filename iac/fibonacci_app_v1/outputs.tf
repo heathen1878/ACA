@@ -1,3 +1,3 @@
-output "nginx_endpoint" {
+output "ingress" {
   value = azurerm_container_app.nginx.ingress[0].fqdn
 }
