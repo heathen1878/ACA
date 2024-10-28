@@ -56,7 +56,8 @@ jobs:
         go install github.com/jstemmer/go-junit-report/v2@latest
 
         # Run Go tests
-        go test -v 2>&1 ./... | go-junit-report -set-exit-code > report.xml
+        # go test -v 2>&1 ./... | go-junit-report -set-exit-code > report.xml
+        go test -v ./...
 
         # List Directory
 
