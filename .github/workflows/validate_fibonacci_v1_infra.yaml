@@ -18,6 +18,9 @@ jobs:
     secrets:
       API_KEY: ${{ secrets.INFRACOST_API_KEY }}
 
+  scan_iac:
+    uses: 
+
   plan_fibonacci_v1:
     runs-on: ubuntu-latest
     name: Plan Fibonacci V1 using Terraform
