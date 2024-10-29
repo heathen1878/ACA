@@ -24,7 +24,19 @@ jobs:
       uses: azure/login@v2
       with:
         creds: '{"clientId": "${{ secrets.ARM_CLIENT_ID }}", "clientSecret": "${{ secrets.ARM_CLIENT_SECRET }}", "tenantId": "${{ secrets.ARM_TENANT_ID }}", "subscriptionId": "${{ vars.ARM_SUBSCRIPTION_ID }}"}'
-    
+ 
+    - name: get runner ip
+      id: runner_ip
+      run: |
+        IP_ADDR=$(curl -s https://ifconfig.me/ip)
+        echo "IPADDR=$IP_ADDR" >> $GITHUB_OUTPUT
+
+    - name: modify state storage acl
+      run: |
+        az storage account network-rule add --account-name ${{ vars.STATE_STORAGE_ACCOUNT }} --ip-address ${{ steps.runner_ip.outputs.IPADDR }} --subscription ${{ vars.ARM_SUBSCRIPTION_ID }}  > /dev/null 2>&1
+        echo "Pausing for 60 seconds to ensure the ACL has been set..."
+        sleep 60
+        
     - name: install terraform
       uses: hashicorp/setup-terraform@v3
       with:
@@ -70,4 +82,10 @@ jobs:
         paths: |
           tests/report.xml
       if: always()
+    
+    - name: modify state storage acl - clean up
+      if: always()
+      run: |
+        az storage account network-rule remove --account-name ${{ vars.STATE_STORAGE_ACCOUNT }} --ip-address ${{ steps.runner_ip.outputs.IPADDR }}  --subscription ${{ vars.ARM_SUBSCRIPTION_ID }}  > /dev/null 2>&1
+
       
