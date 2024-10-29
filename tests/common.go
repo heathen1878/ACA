@@ -8,7 +8,15 @@ import (
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 )
 
-type Options map[string]any
+type Options map[string]interface{}
+
+func BackendConfig() Options {
+	return Options{
+		"storage_account_name": os.Getenv("STORAGE_ACCOUNT_NAME"),
+		"container_name":       os.Getenv("CONTAINER_NAME"),
+		"key":                  os.Getenv("KEY"),
+	}
+}
 
 func DefaultOptions() Options {
 	return Options{
@@ -18,10 +26,11 @@ func DefaultOptions() Options {
 	}
 }
 
-func Setup(t *testing.T, e string, opts Options) *terraform.Options {
+func Setup(t *testing.T, e string, backendConfig Options, opts Options) *terraform.Options {
 	tempFolder := test_structure.CopyTerraformFolderToTemp(t, "../", e)
 	return &terraform.Options{
-		TerraformDir: tempFolder,
-		Vars:         opts,
+		BackendConfig: backendConfig,
+		TerraformDir:  tempFolder,
+		Vars:          opts,
 	}
 }
