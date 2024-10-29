@@ -184,8 +184,8 @@ resource "azurerm_container_app_environment" "this" {
     name                  = "Dedicated"
     workload_profile_type = "D4"
   
-    minimum_count         = 0
-    maximum_count         = 0
+    minimum_count         = 1
+    maximum_count         = 3
   }
   tags = merge(local.tags,
     {
