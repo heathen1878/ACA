@@ -48,9 +48,9 @@ jobs:
         export ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}
         export ARM_SUBSCRIPTION_ID=${{ vars.ARM_SUBSCRIPTION_ID }}
         export ARM_USE_AZUREAD=true
-        export STORAGE_ACCOUNT_NAME=${{ vars.STATE_STORAGE_ACCOUNT }}" \
-        export CONTAINER_NAME=${{ vars.FB_STATE_STORAGE_CONTAINER }}" \
-        export KEY=${{ vars.FB_STATE_FILE_NAME }}"
+        export STORAGE_ACCOUNT_NAME=${{ vars.STATE_STORAGE_ACCOUNT }}
+        export CONTAINER_NAME=${{ vars.FB_STATE_STORAGE_CONTAINER }}
+        export KEY=${{ vars.FB_STATE_FILE_NAME }}
         export DOCKER_IMAGE_TAG=sbx
         export PSQL_ADMIN_PASSWORD=${{ secrets.PSQL_ADMIN_PASSWORD }}
         export PSQL_ADMIN_USERNAME=${{ secrets.PSQL_ADMIN_USERNAME }}
