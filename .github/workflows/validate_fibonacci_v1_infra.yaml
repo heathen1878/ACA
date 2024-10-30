@@ -217,11 +217,8 @@ jobs:
         export PSQL_ADMIN_PASSWORD=${{ secrets.PSQL_ADMIN_PASSWORD }}
         export PSQL_ADMIN_USERNAME=${{ secrets.PSQL_ADMIN_USERNAME }}
 
-        # Install Go Junit reporter
-        go install github.com/jstemmer/go-junit-report/v2@latest
-
         # Run Go tests
-        go test -v -timeout 5000s ./... | go-junit-report -set-exit-code > report.xml
+        go test -timeout 5000s ./... >> $GITHUB_STEP_SUMMARY
 
     - name: Upload test summary
       uses: test-summary/action@v1
