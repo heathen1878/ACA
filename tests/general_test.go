@@ -2,6 +2,7 @@ package test
 
 import (
 	"crypto/tls"
+	"fmt"
 	"testing"
 	"time"
 
@@ -22,6 +23,7 @@ func TestSmoke(t *testing.T) {
 
 	smokeTestText := "Enter your index:"
 	smokeUrl := terraform.Output(t, terraformOptions, "ingress")
+	smokeUrl = fmt.Sprintf("http://%s", smokeUrl)
 	tlsConfig := tls.Config{}
 	maxRetries := 30
 	timeBetweenRetries := 5 * time.Second
