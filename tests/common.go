@@ -34,3 +34,7 @@ func Setup(t *testing.T, e string, backendConfig Options, opts Options) *terrafo
 		Vars:          opts,
 	}
 }
+
+func Response(status int, _ string) bool {
+	return status == 200
+}

@@ -44,10 +44,6 @@ resource "azurerm_resource_group" "this" {
 }
 
 resource "azurerm_network_watcher" "this" {
-  for_each = local.use_existing_network_watcher ? {} : {
-    "Deployed" = "Yes"
-  }
-
   name                = local.network_watcher
   resource_group_name = azurerm_resource_group.this.name
   location            = local.location
@@ -70,6 +66,10 @@ resource "azurerm_virtual_network" "this" {
       service = "Networking"
     }
   )
+
+  depends_on = [
+    azurerm_network_watcher.this
+  ]
 }
 
 resource "azurerm_subnet" "cae" {

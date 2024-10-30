@@ -21,12 +21,12 @@ func TestSmoke(t *testing.T) {
 	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 
-	smokeTestText := "Enter your index:"
+	//	smokeTestText := "Enter your index:"
 	smokeUrl := terraform.Output(t, terraformOptions, "ingress")
 	smokeUrl = fmt.Sprintf("http://%s", smokeUrl)
 	tlsConfig := tls.Config{}
 	maxRetries := 30
 	timeBetweenRetries := 5 * time.Second
 
-	http_helper.HttpGetWithRetry(t, smokeUrl, &tlsConfig, 200, smokeTestText, maxRetries, timeBetweenRetries)
+	http_helper.HttpGetWithRetryWithCustomValidation(t, smokeUrl, &tlsConfig, maxRetries, timeBetweenRetries, Response)
 }
