@@ -55,7 +55,7 @@ gh secret set SNYK_TOKEN -b "Snyk API key" -r "account_name/repo_name"
 
 ## Validation
 
-The workflow [plan_infra.yaml](../.github/workflows/plan_infra.yaml) does the following:
+The workflow [validate infra](../.github/workflows/validate_fibonacci_v1_infra.yaml) does the following:
 
 - Authenticates the pipeline
 - Gets the runners IP address

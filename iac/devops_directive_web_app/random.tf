@@ -1,6 +1,6 @@
 resource "random_id" "this" {
   keepers = {
-    proj = "fbc"
+    proj = "ddd"
     key  = data.azurerm_client_config.current.subscription_id
   }
 
