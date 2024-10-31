@@ -8,10 +8,6 @@
 
 [GitHub Cli](https://cli.github.com/)
 
-### Environment
-
-A protection rule for the Sandbox; this ensures the deployment isn't removed until a manual check is complete. TODO: Needs replacing with an automated test.
-
 ### Github Variables
 
 Create github variables to set the Terraform backend
@@ -59,7 +55,7 @@ gh secret set SNYK_TOKEN -b "Snyk API key" -r "account_name/repo_name"
 
 ## Validation
 
-The workflow [plan_infra.yaml](../.github/workflows/plan_infra.yaml) does the following:
+The workflow [validate infra](../.github/workflows/validate_fibonacci_v1_infra.yaml) does the following:
 
 - Authenticates the pipeline
 - Gets the runners IP address
@@ -68,11 +64,6 @@ The workflow [plan_infra.yaml](../.github/workflows/plan_infra.yaml) does the fo
 - Validates the Terraform syntax
 - Plans against any `.tf` within the repo
 - Displays a cost for the proposed Terraform changes - See Infracost
-- Deploys the plan to a sandbox
-- Currently waits for a manual check - ideally this would be Terratest
-- Destroys the resources
-- Posts a comment to the PR with a status
-
-## Deploy
-
-## Destroy
+- Deploys the infrastructure and associated Docker Images
+- Tests the Web App responds via the Ingress Controller
+- Destroys the Infrastructure
