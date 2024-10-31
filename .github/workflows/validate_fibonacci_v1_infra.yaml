@@ -219,13 +219,6 @@ jobs:
 
         # Run Go tests
         go test -timeout 5000s ./... >> $GITHUB_STEP_SUMMARY
-
-    - name: Upload test summary
-      uses: test-summary/action@v1
-      with:
-        paths: |
-          tests/report.xml
-      if: always()
     
     - name: modify state storage acl - clean up
       run: |
